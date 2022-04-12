@@ -1,0 +1,20 @@
+header {
+  background-color: rgb(233, 233, 233);
+  text-align: center;
+}
+
+.card {
+  width: 15rem;
+}
+
+.savedVacation {
+  width: 15rem;
+}
+
+#addToList {
+  width: 100%;
+}
+
+.listTitle {
+  text-align: center;
+}
