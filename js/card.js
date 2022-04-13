@@ -1,16 +1,16 @@
-import CLIENT_KEY from './api.js';
+import fetchUrl from './fetchUrl.js';
 class Card {
-  constructor(name, location, description) {
+  constructor(name, location, description, photo) {
     this.name = name;
     this.location = location;
     this.description = description;
-    this.photo =
-      'https://gwinnettmagazine.com/wp-content/uploads/2021/04/vacation-696x410.jpg';
+    this.photo = photo === '' ? false : photo;
     this.query = name;
   }
   async create() {
-    await this.setUrl();
-    console.log('creating');
+    if (!this.photo) {
+      await this.setUrl(this.query);
+    }
     const card = `<div class="card px-0 m-1" id = "card">
      <img class="card-img-top" alt="photo of ${this.name}" src="${this.photo}">
      <div class="card-body">
@@ -23,17 +23,11 @@ class Card {
          </div>
      </div>
   </div>`;
-    console.log('card', card);
-    console.log(typeof card);
+
     return card;
   }
-  async setUrl() {
-    const response = await fetch(
-      `https://api.unsplash.com/photos/random?orientation=landscape&query=${this.query}&client_id=${CLIENT_KEY}`
-    );
-    const jsonRes = await response.json();
-
-    this.photo = await jsonRes.urls.small;
+  async setUrl(query) {
+    this.photo = await fetchUrl(query);
   }
 }
 

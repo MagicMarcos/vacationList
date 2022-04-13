@@ -5,11 +5,7 @@ export default class ListTitle {
   }
 
   reset() {
-    const listTitle = document.getElementById('listTitle');
-    const savedVacationCount =
-      document.querySelectorAll('.savedVacation').length;
-
-    if (savedVacationCount === 0) {
+    if (savedVacations.childNodes.length === 0) {
       listTitle.innerHTML = 'Enter destination details';
     }
   }

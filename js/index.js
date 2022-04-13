@@ -15,21 +15,19 @@ function addItem(e) {
 
 // ! Cards
 async function createCard() {
-  const vacationForm = document.getElementById('vacationForm');
-  const name = vacationForm.elements['destinationName'].value;
-  const location = vacationForm.elements['location'].value;
-  const description = vacationForm.elements['description'].value;
+  const card = new Card(
+    destinationName.value,
+    locationName.value,
+    description.value,
+    photo.value
+  );
 
-  const card = new Card(name, location, description);
-
-  const cardContainer = document.getElementById('savedVacations');
-  cardContainer.innerHTML += await card.create();
+  savedVacations.innerHTML += await card.create();
 
   addButtonEventListeners();
 }
 
 // ! Buttons
-// TODO we must ensure that this doesn't have to loop every time a new button is created
 function addButtonEventListeners() {
   document
     .querySelectorAll('.delete')
@@ -45,8 +43,5 @@ function deleteVacation(e) {
 }
 
 function editVacation(e) {
-  edit.photo(e);
-  edit.destination(e);
-  edit.location(e);
-  edit.description(e);
+  edit.all(e);
 }

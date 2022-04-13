@@ -1,5 +1,17 @@
+import fetchUrl from './fetchUrl.js';
+
 export default class Edit {
-  photo(e) {
+  constructor() {
+    this.query;
+  }
+  all(e) {
+    this.destination(e);
+    this.location(e);
+    this.description(e);
+    this.photo(e);
+  }
+
+  async photo(e) {
     const card = getCardBody(e).parentElement;
     const photoUrl = card.children[0];
     const editedPhoto = window.prompt('Enter new photo url');
@@ -9,6 +21,8 @@ export default class Edit {
       this.photo(e);
     } else if ('' !== editedPhoto) {
       photoUrl.src = editedPhoto;
+    } else {
+      photoUrl.src = await fetchUrl(this.query);
     }
   }
 
@@ -18,6 +32,7 @@ export default class Edit {
     const editedDestination = window.prompt('Enter new name');
     if (editedDestination !== '') {
       destination.innerHTML = editedDestination;
+      this.query = editedDestination;
     }
   }
 
@@ -41,10 +56,8 @@ export default class Edit {
     }
   }
 
-  //* validates picture url during edit
   isValidURL(photo) {
     let url;
-
     try {
       url = new URL(photo);
     } catch (error) {
