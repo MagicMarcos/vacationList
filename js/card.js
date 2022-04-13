@@ -1,3 +1,4 @@
+import CLIENT_KEY from './api.js';
 class Card {
   constructor(name, location, description) {
     this.name = name;
@@ -28,7 +29,7 @@ class Card {
   }
   async setUrl() {
     const response = await fetch(
-      `https://api.unsplash.com/photos/random?orientation=landscape&query=${this.query}&client_id=`
+      `https://api.unsplash.com/photos/random?orientation=landscape&query=${this.query}&client_id=${CLIENT_KEY}`
     );
     const jsonRes = await response.json();
 
