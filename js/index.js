@@ -1,6 +1,6 @@
-import card from './card.js';
 import Edit from './edit.js';
 import ListTitle from './listTitle.js';
+import Card from './card.js';
 const edit = new Edit();
 const listTitle = new ListTitle();
 
@@ -14,13 +14,22 @@ function addItem(e) {
 }
 
 // ! Cards
-function createCard() {
+async function createCard() {
+  const vacationForm = document.getElementById('vacationForm');
+  const name = vacationForm.elements['destinationName'].value;
+  const location = vacationForm.elements['location'].value;
+  const description = vacationForm.elements['description'].value;
+
+  const card = new Card(name, location, description);
+
   const cardContainer = document.getElementById('savedVacations');
-  cardContainer.innerHTML += card();
+  cardContainer.innerHTML += await card.create();
+
   addButtonEventListeners();
 }
 
 // ! Buttons
+// TODO we must ensure that this doesn't have to loop every time a new button is created
 function addButtonEventListeners() {
   document
     .querySelectorAll('.delete')
