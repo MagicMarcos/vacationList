@@ -3,7 +3,7 @@ async function fetchUrl(query) {
   let url;
   try {
     const response = await fetch(
-      `https://api.unsplash.com/photos/random?orientation=landscape&query=${query}&client_id=${CLIENT_KEY}`
+      `https://api.unsplash.com/photos/random?orientation=landscape&query=${query}&fit=crop&w=210&h=140&client_id=${CLIENT_KEY}`
     );
     const jsonRes = await response.json();
 

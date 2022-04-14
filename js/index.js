@@ -1,8 +1,21 @@
 import Edit from './edit.js';
 import ListTitle from './listTitle.js';
 import Card from './card.js';
+import CardStorage from './cardStorage.js';
 const edit = new Edit();
 const listTitle = new ListTitle();
+const cardStorage = new CardStorage();
+
+(() => {
+  cardStorage.setMap();
+  const cards = cardStorage.getCards();
+  if (cards.length > 0) {
+    for (let card of cards) {
+      savedVacations.innerHTML += card;
+      addButtonEventListeners();
+    }
+  }
+})();
 
 document.getElementById('vacationForm').addEventListener('submit', addItem);
 
@@ -15,7 +28,9 @@ function addItem(e) {
 
 // ! Cards
 async function createCard() {
+  const id = setUniqueId();
   const card = new Card(
+    id,
     destinationName.value,
     locationName.value,
     description.value,
@@ -39,7 +54,11 @@ function addButtonEventListeners() {
 }
 
 function deleteVacation(e) {
-  e.target.parentElement.parentElement.parentElement.remove();
+  e.target.parentElement.parentElement.parentElement.parentElement.remove();
+
+  window.localStorage.removeItem(
+    e.target.parentElement.parentElement.parentElement.parentElement.id
+  );
   listTitle.reset();
 }
 
@@ -47,4 +66,10 @@ function editVacation(e) {
   edit.all(e);
 }
 
-// need some kind of data-id to relate the date time with the individual card to be store in sessions storage
+function setUniqueId() {
+  const id = Math.ceil(Math.random() * 1000);
+  if (cardStorage.getMap().has(id)) {
+    setUniqueId();
+  }
+  return id;
+}

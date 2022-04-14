@@ -3,14 +3,27 @@ import fetchUrl from './fetchUrl.js';
 export default class Edit {
   constructor() {
     this.query;
+    this.dateEdited = moment().format('ddd, MMM do YYYY');
   }
   all(e) {
     this.destination(e);
     this.location(e);
     this.description(e);
     this.photo(e);
+    this.editDate(e);
+    this.updateStorage(e);
   }
 
+  destination(e) {
+    const destination = getCardBody(e).children[0];
+    this.query = destination;
+
+    const editedDestination = window.prompt('Enter new name');
+    if (editedDestination !== '') {
+      destination.innerText = editedDestination;
+      this.query = editedDestination;
+    }
+  }
   async photo(e) {
     const card = getCardBody(e).parentElement;
     const photoUrl = card.children[0];
@@ -23,16 +36,6 @@ export default class Edit {
       photoUrl.src = editedPhoto;
     } else {
       photoUrl.src = await fetchUrl(this.query);
-    }
-  }
-
-  destination(e) {
-    const destination = getCardBody(e).children[0];
-
-    const editedDestination = window.prompt('Enter new name');
-    if (editedDestination !== '') {
-      destination.innerHTML = editedDestination;
-      this.query = editedDestination;
     }
   }
 
@@ -56,6 +59,10 @@ export default class Edit {
     }
   }
 
+  editDate(e) {
+    lastEdit.innerHTML = `Edited ${this.dateEdited}`;
+  }
+
   isValidURL(photo) {
     let url;
     try {
@@ -64,6 +71,13 @@ export default class Edit {
       return false;
     }
     return true;
+  }
+
+  updateStorage(e) {
+    const wrapper = getCardBody(e).parentNode.parentNode;
+    const wrapperString = wrapper.outerHTML;
+    window.localStorage.removeItem(wrapper.id);
+    window.localStorage.setItem(wrapper.id, wrapperString);
   }
 }
 
