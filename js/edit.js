@@ -3,7 +3,6 @@ import fetchUrl from './fetchUrl.js';
 export default class Edit {
   constructor() {
     this.query;
-    this.dateEdited = moment().format('ddd, MMM do YYYY');
   }
   all(e) {
     this.destination(e);
@@ -27,11 +26,19 @@ export default class Edit {
   async photo(e) {
     const card = getCardBody(e).parentElement;
     const photoUrl = card.children[0];
-    const editedPhoto = window.prompt('Enter new photo url');
+    let editedPhoto = window.prompt('Enter new photo url');
 
-    if ('' !== editedPhoto && !this.isValidURL(editedPhoto)) {
+    if (
+      '' !== editedPhoto &&
+      !this.isValidURL(editedPhoto) &&
+      null !== editedPhoto
+    ) {
       alert('Please enter a valid URL');
       this.photo(e);
+    } else if (null === editedPhoto) {
+      editedPhoto = '';
+    } else if ('' === editedPhoto) {
+      photoUrl.src = photoUrl.src;
     } else if ('' !== editedPhoto) {
       photoUrl.src = editedPhoto;
     } else {
@@ -59,8 +66,9 @@ export default class Edit {
     }
   }
 
-  editDate(e) {
-    lastEdit.innerHTML = `Edited ${this.dateEdited}`;
+  editDate() {
+    const dateEdited = moment().format('ddd, MMM do YYYY h:mm:ss a');
+    lastEdit.innerHTML = `Edited ${dateEdited}`;
   }
 
   isValidURL(photo) {

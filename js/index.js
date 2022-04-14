@@ -12,8 +12,8 @@ const cardStorage = new CardStorage();
   if (cards.length > 0) {
     for (let card of cards) {
       savedVacations.innerHTML += card;
-      addButtonEventListeners();
     }
+    addButtonEventListeners();
   }
 })();
 
@@ -34,8 +34,7 @@ async function createCard() {
     destinationName.value,
     locationName.value,
     description.value,
-    photo.value,
-    moment().format('ddd, MMM do YYYY')
+    photo.value
   );
 
   savedVacations.innerHTML += await card.create();
