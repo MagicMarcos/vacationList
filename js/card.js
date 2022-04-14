@@ -7,7 +7,7 @@ class Card {
     this.description = description;
     this.photo = photo === '' ? false : photo;
     this.dateCreated = moment().format('ddd, MMM do YY h:mm:ss a');
-    this.query = name;
+    this.query = `${name}-${location}`;
   }
   async create() {
     if (!this.photo) {

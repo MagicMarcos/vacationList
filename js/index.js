@@ -28,7 +28,7 @@ function addItem(e) {
 
 // ! Cards
 async function createCard() {
-  const id = setUniqueId();
+  const id = cardStorage.setUniqueId();
   const card = new Card(
     id,
     destinationName.value,
