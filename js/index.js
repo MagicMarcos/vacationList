@@ -19,7 +19,8 @@ async function createCard() {
     destinationName.value,
     locationName.value,
     description.value,
-    photo.value
+    photo.value,
+    moment().format('ddd, MMM do YYYY')
   );
 
   savedVacations.innerHTML += await card.create();
@@ -45,3 +46,5 @@ function deleteVacation(e) {
 function editVacation(e) {
   edit.all(e);
 }
+
+// need some kind of data-id to relate the date time with the individual card to be store in sessions storage

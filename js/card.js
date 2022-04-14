@@ -1,10 +1,11 @@
 import fetchUrl from './fetchUrl.js';
 class Card {
-  constructor(name, location, description, photo) {
+  constructor(name, location, description, photo, dateCreated) {
     this.name = name;
     this.location = location;
     this.description = description;
     this.photo = photo === '' ? false : photo;
+    this.dateCreated = dateCreated;
     this.query = name;
   }
   async create() {
@@ -17,9 +18,12 @@ class Card {
          <h5 class="card-title">${this.name}</h5>
          <h6 class="card-subtitle mb-2 text-muted">${this.location}</h6>
          <p class="card-text">${this.description}</p>
-         <div class="options d-flex justify-content-between">
+         <div class=" d-flex justify-content-between">
              <button class="btn btn-warning edit" >Edit</button>
              <button class="btn btn-danger delete">Remove</button>
+         </div>
+         <div class="relevantDates d-flex justify-content-between mt-2"> 
+            <div class="text-muted">Posted ${this.dateCreated}</div>
          </div>
      </div>
   </div>`;
